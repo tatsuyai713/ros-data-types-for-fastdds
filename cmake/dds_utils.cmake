@@ -91,7 +91,7 @@ macro(COMPILE_IDL _idl_file)
     set(_workingdir ${CMAKE_CURRENT_BINARY_DIR}/${_idl_grand_parent_dir_name}/${_idl_parent_dir_name})
 	configure_file(${_idl_file} ${_workingdir}/${_idl}.idl COPYONLY)
     message(STATUS "Doing initial compile for ${_idl_file}")
-    execute_process(COMMAND $ENV{HOME}/Fast-DDS-Gen/scripts/fastddsgen ${_idl}.idl  -I ${_idl_dir} -I ${_idl_grand_parent_dir} -d ${_workingdir} -typeros2 -replace
+    execute_process(COMMAND fastddsgen ${_idl}.idl  -I ${_idl_dir} -I ${_idl_grand_parent_dir} -d ${_workingdir} -typeros2 -replace -cs
                     WORKING_DIRECTORY ${_workingdir}
                     INPUT_FILE ${_idl}.idl
                     )
@@ -119,7 +119,7 @@ macro(CREATE_COMPILE_IDL_COMMAND _idl_file)
     IDL_OUTPUTS(${_idl} ${_workingdir} ${_idl_srcs_var})
     set(ALL_IDL_SRCS ${${_idl_srcs_var}})
     # add_custom_command(OUTPUT ${ALL_IDL_SRCS} 
-    #     COMMAND ~/Fast-DDS-Gen/script/fastddsgen ${_workingdir}/${_idl}.idl -I${_workingdir} -I${_idl_dir} -I${_idl_grand_parent_dir} -d ${_workingdir} -typeros2
+    #     COMMAND fastddsgen ${_workingdir}/${_idl}.idl -I${_workingdir} -I${_idl_dir} -I${_idl_grand_parent_dir} -d ${_workingdir} -typeros2
     #     # DEPENDS ${_workingdir}/${_idl}.idl
     #     COMMENT "Compiling ${_idl}.idl" VERBATIM)
 endmacro(CREATE_COMPILE_IDL_COMMAND)
