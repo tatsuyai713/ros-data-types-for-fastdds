@@ -26,7 +26,22 @@ add_library(idl_generated_lib STATIC
 add_dependencies(idl_generated_lib CompileIDLFiles)
 
 include_directories("${CMAKE_CURRENT_BINARY_DIR}" 
-                     ${PROJECT_BINARY_DIR})
+  "${CMAKE_CURRENT_BINARY_DIR}/diagnostic_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/gazebo_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/geometry_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/lifecycle_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/nav_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/pendulum_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/sensor_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/shape_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/std_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/stereo_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/test_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/tf2_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/trajectory_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/visualization_msgs"
+  ${PROJECT_BINARY_DIR}
+)
 
 target_link_libraries(idl_generated_lib LINK_PUBLIC)
 
