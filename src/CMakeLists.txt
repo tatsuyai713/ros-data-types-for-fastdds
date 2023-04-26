@@ -1,4 +1,3 @@
-#add_subdirectory(idl_generated)
 add_subdirectory(diagnostic_msgs)
 add_subdirectory(gazebo_msgs)
 add_subdirectory(geometry_msgs)
