@@ -1,55 +1,51 @@
-# Copyright 2018 Real-Time Innovations 
-# 
-# Licensed under the Apache License, Version 2.0 (the "License"); 
-# you may not use this file except in compliance with the License. 
-# You may obtain a copy of the License at 
-# 
-#     http://www.apache.org/licenses/LICENSE-2.0 
-# 
-# Unless required by applicable law or agreed to in writing, software 
-# distributed under the License is distributed on an "AS IS" BASIS, 
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-# See the License for the specific language governing permissions and 
-# limitations under the License. 
+file(GLOB_RECURSE Original_IDL_Files
+  "${CMAKE_CURRENT_SOURCE_DIR}/*/*.idl"
+)
+CREATE_IDL_FILES_COMMAND(${Original_IDL_Files})
+file(GLOB_RECURSE Local_IDL_Files
+  "${CMAKE_CURRENT_BINARY_DIR}/*.idl"
+)
+file(GLOB_RECURSE in1_files
+  "${CMAKE_CURRENT_BINARY_DIR}/*.cxx"
+  "${CMAKE_CURRENT_BINARY_DIR}/*.h"
+)
+if (NOT in1_files)
+    #create an initial version of these files
+    COMPILE_IDL_FILES(${Original_IDL_Files})
+    file(GLOB_RECURSE in1_files
+      "${CMAKE_CURRENT_BINARY_DIR}/*.cxx"
+      "${CMAKE_CURRENT_BINARY_DIR}/*.h"
+    )
+endif()
+add_custom_target(visualization_msgs_CompileIDLFiles ALL
+    DEPENDS ${ALL_IDL_SRCS})
+add_definitions(${DDS_DEFINITIONS})
+add_library(visualization_msgs SHARED
+    ${in1_files}
+)
+add_dependencies(visualization_msgs visualization_msgs_CompileIDLFiles)
 
-include(ConnextDdsRosDdsTypes)
-
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/msg/ImageMarker.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/msg/InteractiveMarkerControl.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/msg/InteractiveMarkerFeedback.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/msg/InteractiveMarker.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/msg/InteractiveMarkerInit.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/msg/InteractiveMarkerPose.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/msg/InteractiveMarkerUpdate.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/msg/MarkerArray.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/msg/Marker.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/msg/MenuEntry.idl")
-
-connextdds_generate_ros_dds_types(
-    LANG ${LANG}
-    OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-    IDL_FILES ${idl_files}
-    INCLUDE_DIRS ${top_level_source_dir}
+include_directories("${CMAKE_CURRENT_BINARY_DIR}" 
+  "${CMAKE_CURRENT_BINARY_DIR}/../diagnostic_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../gazebo_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../geometry_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../lifecycle_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../nav_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../pendulum_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../sensor_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../shape_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../std_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../stereo_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../test_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../tf2_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../trajectory_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../visualization_msgs"
+  ${PROJECT_BINARY_DIR}
 )
 
-add_library( visualizationlibrary OBJECT
-    ${generated_file_list}
-)
+target_link_libraries(visualization_msgs LINK_PUBLIC -Wl,--allow-multiple-definition)
 
-set_property(TARGET visualizationlibrary PROPERTY 
-    POSITION_INDEPENDENT_CODE ON
-)
-
-target_include_directories(visualizationlibrary PRIVATE 
-    ${CONNEXTDDS_INCLUDE_DIRS}
-    ${top_level_binary_dir}
-)
-
-target_compile_definitions(visualizationlibrary PRIVATE 
-    ${CONNEXTDDS_COMPILE_DEFINITIONS}
-)
-
-add_dependencies(visualizationlibrary 
-    stdlibrary 
-    geometrylibrary
+target_include_directories(visualization_msgs PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+  $<INSTALL_INTERFACE:include> 
 )

@@ -119,7 +119,7 @@ macro(CREATE_COMPILE_IDL_COMMAND _idl_file)
     IDL_OUTPUTS(${_idl} ${_workingdir} ${_idl_srcs_var})
     set(ALL_IDL_SRCS ${${_idl_srcs_var}})
     # add_custom_command(OUTPUT ${ALL_IDL_SRCS} 
-    #     COMMAND fastddsgen ${_workingdir}/${_idl}.idl -I${_workingdir} -I${_idl_dir} -I${_idl_grand_parent_dir} -d ${_workingdir} -typeros2
+    #     COMMAND ~/Fast-DDS-Gen/script/fastddsgen ${_workingdir}/${_idl}.idl -I${_workingdir} -I${_idl_dir} -I${_idl_grand_parent_dir} -d ${_workingdir} -typeros2
     #     # DEPENDS ${_workingdir}/${_idl}.idl
     #     COMMENT "Compiling ${_idl}.idl" VERBATIM)
 endmacro(CREATE_COMPILE_IDL_COMMAND)

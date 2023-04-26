@@ -1,60 +1,51 @@
-# Copyright 2018 Real-Time Innovations 
-# 
-# Licensed under the Apache License, Version 2.0 (the "License"); 
-# you may not use this file except in compliance with the License. 
-# You may obtain a copy of the License at 
-# 
-#     http://www.apache.org/licenses/LICENSE-2.0 
-# 
-# Unless required by applicable law or agreed to in writing, software 
-# distributed under the License is distributed on an "AS IS" BASIS, 
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-# See the License for the specific language governing permissions and 
-# limitations under the License. 
+file(GLOB_RECURSE Original_IDL_Files
+  "${CMAKE_CURRENT_SOURCE_DIR}/*/*.idl"
+)
+CREATE_IDL_FILES_COMMAND(${Original_IDL_Files})
+file(GLOB_RECURSE Local_IDL_Files
+  "${CMAKE_CURRENT_BINARY_DIR}/*.idl"
+)
+file(GLOB_RECURSE in1_files
+  "${CMAKE_CURRENT_BINARY_DIR}/*.cxx"
+  "${CMAKE_CURRENT_BINARY_DIR}/*.h"
+)
+if (NOT in1_files)
+    #create an initial version of these files
+    COMPILE_IDL_FILES(${Original_IDL_Files})
+    file(GLOB_RECURSE in1_files
+      "${CMAKE_CURRENT_BINARY_DIR}/*.cxx"
+      "${CMAKE_CURRENT_BINARY_DIR}/*.h"
+    )
+endif()
+add_custom_target(test_msgs_CompileIDLFiles ALL
+    DEPENDS ${ALL_IDL_SRCS})
+add_definitions(${DDS_DEFINITIONS})
+add_library(test_msgs SHARED
+    ${in1_files}
+)
+add_dependencies(test_msgs test_msgs_CompileIDLFiles)
 
-include(ConnextDdsRosDdsTypes)
-
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/msg/BoundedArrayNested.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/msg/BoundedArrayPrimitives.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/msg/Builtins.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/msg/DynamicArrayNested.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/msg/DynamicArrayPrimitives.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/msg/DynamicArrayPrimitivesNested.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/msg/Empty.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/msg/Nested.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/msg/Primitives.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/msg/StaticArrayNested.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/msg/StaticArrayPrimitives.idl")
-
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/srv/Empty_Request.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/srv/Empty_Response.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/srv/Primitives_Request.idl")
-list(APPEND idl_files "${CMAKE_CURRENT_SOURCE_DIR}/srv/Primitives_Response.idl")
-
-connextdds_generate_ros_dds_types(
-    LANG ${LANG}
-    OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-    IDL_FILES ${idl_files}
-    INCLUDE_DIRS ${top_level_source_dir}
+include_directories("${CMAKE_CURRENT_BINARY_DIR}" 
+  "${CMAKE_CURRENT_BINARY_DIR}/../diagnostic_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../gazebo_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../geometry_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../lifecycle_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../nav_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../pendulum_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../sensor_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../shape_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../std_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../stereo_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../test_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../tf2_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../trajectory_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../visualization_msgs"
+  ${PROJECT_BINARY_DIR}
 )
 
-add_library( testlibrary OBJECT
-    ${generated_file_list}
-)
+target_link_libraries(test_msgs LINK_PUBLIC -Wl,--allow-multiple-definition)
 
-set_property(TARGET testlibrary PROPERTY 
-    POSITION_INDEPENDENT_CODE ON
-)
-
-target_include_directories(testlibrary PRIVATE 
-    ${CONNEXTDDS_INCLUDE_DIRS}
-    ${top_level_binary_dir}
-)
-
-target_compile_definitions(testlibrary PRIVATE 
-    ${CONNEXTDDS_COMPILE_DEFINITIONS}
-)
-
-add_dependencies(testlibrary 
-    stdlibrary
+target_include_directories(test_msgs PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+  $<INSTALL_INTERFACE:include> 
 )
