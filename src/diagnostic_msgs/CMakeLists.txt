@@ -49,3 +49,12 @@ target_include_directories(diagnostic_msgs PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
   $<INSTALL_INTERFACE:include> 
 )
+
+
+install(TARGETS diagnostic_msgs
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+)
+
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/diagnostic_msgs DESTINATION include/)

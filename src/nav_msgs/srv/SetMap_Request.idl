@@ -23,7 +23,7 @@
 module nav_msgs { module srv { 
  
 struct SetMap_Request { 
-    nav_msgs::msg::OccupancyGrid map; 
+    nav_msgs::msg::OccupancyGrid map_; 
     geometry_msgs::msg::PoseWithCovarianceStamped initial_pose; 
 }; 
  

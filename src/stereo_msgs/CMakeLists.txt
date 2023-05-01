@@ -49,3 +49,11 @@ target_include_directories(stereo_msgs PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
   $<INSTALL_INTERFACE:include> 
 )
+
+install(TARGETS stereo_msgs
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+)
+
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/stereo_msgs DESTINATION include/)

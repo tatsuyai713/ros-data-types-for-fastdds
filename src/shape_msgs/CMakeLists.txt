@@ -49,3 +49,11 @@ target_include_directories(shape_msgs PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
   $<INSTALL_INTERFACE:include> 
 )
+
+install(TARGETS shape_msgs
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+)
+
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/shape_msgs DESTINATION include/)

@@ -49,3 +49,11 @@ target_include_directories(gazebo_msgs PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
   $<INSTALL_INTERFACE:include> 
 )
+
+install(TARGETS gazebo_msgs
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin
+)
+
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/gazebo_msgs DESTINATION include/)

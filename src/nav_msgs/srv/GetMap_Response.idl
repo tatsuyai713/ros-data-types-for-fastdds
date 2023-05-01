@@ -22,7 +22,7 @@
 module nav_msgs { module srv { 
  
 struct GetMap_Response { 
-    nav_msgs::msg::OccupancyGrid map; 
+    nav_msgs::msg::OccupancyGrid map_; 
 }; 
  
 }; };  // module srv::nav_msgs 
