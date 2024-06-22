@@ -14,16 +14,18 @@
  * limitations under the License. 
  */ 
  
-#ifndef __std_msgs__msg__Duration__idl 
-#define __std_msgs__msg__Duration__idl 
+#ifndef __builtin_interfaces__msg__Time__idl 
+#define __builtin_interfaces__msg__Time__idl 
  
-module std_msgs { module msg { 
+module builtin_interfaces { module msg { 
  
-struct Duration { 
-    long sec; 
-    unsigned long nanosec; 
+@nested 
+struct Time { 
+    int32 sec; 
+    uint32 nanosec; 
 }; 
  
-}; };  // module msg::std_msgs 
+}; };  // module msg::builtin_interfaces 
  
-#endif  // __std_msgs__msg__Duration__idl 
+#endif  // __builtin_interfaces__msg__Time__idl 
+

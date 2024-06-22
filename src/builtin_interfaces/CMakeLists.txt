@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 
-project(shape_msgs VERSION 1.0.0 LANGUAGES CXX)
+project(builtin_interfaces VERSION 1.0.0 LANGUAGES CXX)
 
 include(${PROJECT_SOURCE_DIR}/../../cmake/dds_utils.cmake)
 
@@ -32,13 +32,13 @@ if (NOT in1_files)
       "${CMAKE_CURRENT_BINARY_DIR}/*.h"
     )
 endif()
-add_custom_target(shape_msgs_CompileIDLFiles ALL
+add_custom_target(builtin_interfaces_CompileIDLFiles ALL
     DEPENDS ${ALL_IDL_SRCS})
 add_definitions(${DDS_DEFINITIONS})
-add_library(shape_msgs SHARED
+add_library(builtin_interfaces SHARED
     ${in1_files}
 )
-add_dependencies(shape_msgs shape_msgs_CompileIDLFiles)
+add_dependencies(builtin_interfaces builtin_interfaces_CompileIDLFiles)
 
 include_directories("${CMAKE_CURRENT_BINARY_DIR}" 
   "${CMAKE_CURRENT_BINARY_DIR}/../diagnostic_msgs"
@@ -59,17 +59,17 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}"
   ${PROJECT_BINARY_DIR}
 )
 
-target_link_libraries(shape_msgs LINK_PUBLIC -Wl,--allow-multiple-definition fastcdr fastrtps)
+target_link_libraries(builtin_interfaces LINK_PUBLIC -Wl,--allow-multiple-definition fastcdr fastrtps)
 
-target_include_directories(shape_msgs PUBLIC
+target_include_directories(builtin_interfaces PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
   $<INSTALL_INTERFACE:include> 
 )
 
-install(TARGETS shape_msgs
+install(TARGETS builtin_interfaces
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
 )
 
-install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/shape_msgs DESTINATION include/)
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/builtin_interfaces DESTINATION include/)
