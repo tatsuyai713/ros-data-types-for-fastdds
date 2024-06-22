@@ -17,7 +17,7 @@
 #ifndef __sensor_msgs__msg__TimeReference__idl 
 #define __sensor_msgs__msg__TimeReference__idl 
  
-#include "std_msgs/msg/Time.idl" 
+#include "builtin_interfaces/msg/Time.idl" 
 #include "std_msgs/msg/Header.idl" 
  
 module sensor_msgs { module msg { 

@@ -17,7 +17,7 @@
 #ifndef __visualization_msgs__msg__ImageMarker__idl 
 #define __visualization_msgs__msg__ImageMarker__idl 
  
-#include "std_msgs/msg/Duration.idl" 
+#include "builtin_interfaces/msg/Duration.idl" 
 #include "geometry_msgs/msg/Point.idl" 
 #include "std_msgs/msg/ColorRGBA.idl" 
 #include "std_msgs/msg/Header.idl" 

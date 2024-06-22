@@ -17,7 +17,7 @@
 #ifndef __pendulum_msgs__msg__RttestResults__idl 
 #define __pendulum_msgs__msg__RttestResults__idl 
  
-#include "std_msgs/msg/Time.idl" 
+#include "builtin_interfaces/msg/Time.idl" 
 #include "JointCommand.idl" 
 #include "JointState.idl" 
  

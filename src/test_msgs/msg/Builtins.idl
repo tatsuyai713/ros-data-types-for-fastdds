@@ -17,8 +17,8 @@
 #ifndef __test_msgs__msg__Builtins__idl 
 #define __test_msgs__msg__Builtins__idl 
  
-#include "std_msgs/msg/Duration.idl" 
-#include "std_msgs/msg/Time.idl" 
+#include "builtin_interfaces/msg/Duration.idl" 
+#include "builtin_interfaces/msg/Time.idl" 
  
 module test_msgs { module msg { 
  

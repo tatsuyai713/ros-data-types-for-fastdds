@@ -17,7 +17,7 @@
 #ifndef __trajectory_msgs__msg__MultiDOFJointTrajectoryPoint__idl 
 #define __trajectory_msgs__msg__MultiDOFJointTrajectoryPoint__idl 
  
-#include "std_msgs/msg/Duration.idl" 
+#include "builtin_interfaces/msg/Duration.idl" 
 #include "geometry_msgs/msg/Transform.idl" 
 #include "geometry_msgs/msg/Twist.idl" 
  

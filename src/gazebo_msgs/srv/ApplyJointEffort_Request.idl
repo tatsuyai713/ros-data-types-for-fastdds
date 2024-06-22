@@ -14,8 +14,8 @@
  * limitations under the License. 
  */ 
  
-#include "std_msgs/msg/Time.idl" 
-#include "std_msgs/msg/Duration.idl" 
+#include "builtin_interfaces/msg/Time.idl" 
+#include "builtin_interfaces/msg/Duration.idl" 
  
 module gazebo_msgs { module srv { 
  
