@@ -23,8 +23,8 @@
 module test_msgs { module msg { 
  
 struct Builtins { 
-    std_msgs::msg::Duration duration_value; 
-    std_msgs::msg::Time time_value; 
+    builtin_interfaces::msg::Duration duration_value; 
+    builtin_interfaces::msg::Time time_value; 
 }; 
  
 }; };  // module msg::test_msgs 

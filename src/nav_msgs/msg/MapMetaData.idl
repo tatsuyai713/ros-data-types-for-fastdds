@@ -23,7 +23,7 @@
 module nav_msgs { module msg { 
  
 struct MapMetaData { 
-    std_msgs::msg::Time map_load_time; 
+    builtin_interfaces::msg::Time map_load_time; 
     float resolution; 
     unsigned long width; 
     unsigned long height; 

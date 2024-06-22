@@ -27,7 +27,7 @@ struct MultiDOFJointTrajectoryPoint {
     sequence<geometry_msgs::msg::Transform> transforms; 
     sequence<geometry_msgs::msg::Twist> velocities; 
     sequence<geometry_msgs::msg::Twist> accelerations; 
-    std_msgs::msg::Duration time_from_start; 
+    builtin_interfaces::msg::Duration time_from_start; 
 }; 
  
 }; };  // module msg::trajectory_msgs 

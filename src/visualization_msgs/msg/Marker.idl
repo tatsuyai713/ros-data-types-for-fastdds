@@ -52,7 +52,7 @@ struct Marker {
     geometry_msgs::msg::Pose pose; 
     geometry_msgs::msg::Vector3 scale; 
     std_msgs::msg::ColorRGBA color; 
-    std_msgs::msg::Duration lifetime; 
+    builtin_interfaces::msg::Duration lifetime; 
     boolean frame_locked; 
     sequence<geometry_msgs::msg::Point> points; 
     sequence<std_msgs::msg::ColorRGBA> colors; 

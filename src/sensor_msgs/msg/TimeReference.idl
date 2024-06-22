@@ -24,7 +24,7 @@ module sensor_msgs { module msg {
  
 struct TimeReference { 
     std_msgs::msg::Header header; 
-    std_msgs::msg::Time time_ref; 
+    builtin_interfaces::msg::Time time_ref; 
     string source; 
 }; 
  

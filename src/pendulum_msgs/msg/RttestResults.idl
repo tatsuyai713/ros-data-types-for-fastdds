@@ -24,7 +24,7 @@
 module pendulum_msgs { module msg { 
  
 struct RttestResults { 
-    std_msgs::msg::Time stamp; 
+    builtin_interfaces::msg::Time stamp; 
     pendulum_msgs::msg::JointCommand command; 
     pendulum_msgs::msg::JointState state; 
     unsigned long long cur_latency; 

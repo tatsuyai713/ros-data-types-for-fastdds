@@ -26,8 +26,8 @@ struct ApplyBodyWrench_Request {
     string reference_frame; 
     geometry_msgs::msg::Point reference_point; 
     geometry_msgs::msg::Wrench wrench; 
-    std_msgs::msg::Time start_time; 
-    std_msgs::msg::Duration duration; 
+    builtin_interfaces::msg::Time start_time; 
+    builtin_interfaces::msg::Duration duration; 
 }; 
  
 }; };  // module srv::gazebo_msgs 
