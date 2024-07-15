@@ -32,8 +32,18 @@ if (NOT in1_files)
       "${CMAKE_CURRENT_BINARY_DIR}/*.h"
     )
 endif()
+
+add_custom_command(
+    OUTPUT update_headers_done
+    COMMAND ${CMAKE_COMMAND} -E echo "Running update_headers.sh"
+    COMMAND ${CMAKE_COMMAND} -E env bash ${PROJECT_SOURCE_DIR}/../../scripts/update_headers.sh
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    COMMENT "Updating header files"
+    VERBATIM
+)
+
 add_custom_target(lifecycle_msgs_CompileIDLFiles ALL
-    DEPENDS ${ALL_IDL_SRCS})
+    DEPENDS ${ALL_IDL_SRCS} update_headers_done)
 add_definitions(${DDS_DEFINITIONS})
 add_library(lifecycle_msgs SHARED
     ${in1_files}

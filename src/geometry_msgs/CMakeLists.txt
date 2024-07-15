@@ -33,6 +33,22 @@ if (NOT in1_files)
     )
 endif()
 
+add_custom_command(
+    OUTPUT update_headers_done
+    COMMAND ${CMAKE_COMMAND} -E echo "Running update_headers.sh"
+    COMMAND ${CMAKE_COMMAND} -E env bash ${PROJECT_SOURCE_DIR}/../../scripts/update_headers.sh
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    COMMENT "Updating header files"
+    VERBATIM
+)
+
+add_custom_target(geometry_msgs_CompileIDLFiles ALL
+    DEPENDS ${ALL_IDL_SRCS} update_headers_done)
+add_definitions(${DDS_DEFINITIONS})
+add_library(geometry_msgs SHARED
+    ${in1_files}
+)
+add_dependencies(geometry_msgs geometry_msgs_CompileIDLFiles)
 
 include_directories("${CMAKE_CURRENT_BINARY_DIR}" 
   "${CMAKE_CURRENT_BINARY_DIR}/../diagnostic_msgs"
@@ -52,14 +68,6 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}"
   "${CMAKE_CURRENT_BINARY_DIR}/../visualization_msgs"
   ${PROJECT_BINARY_DIR}
 )
-
-add_custom_target(geometry_msgs_CompileIDLFiles ALL
-    DEPENDS ${ALL_IDL_SRCS})
-add_definitions(${DDS_DEFINITIONS})
-add_library(geometry_msgs SHARED
-    ${in1_files}
-)
-add_dependencies(geometry_msgs geometry_msgs_CompileIDLFiles)
 
 target_link_libraries(geometry_msgs LINK_PUBLIC -Wl,--allow-multiple-definition fastcdr fastrtps)
 
