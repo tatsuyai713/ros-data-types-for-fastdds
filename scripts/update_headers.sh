@@ -18,9 +18,6 @@ find "$folder_path" -type f -name "*.h" | while read -r file_path; do
         
         file_content=$(cat $file_path)
 
-        file_content=$(echo "$file_content" | sed '/#include/ i\
-#include <memory>' | sed '0,/#include <memory>/! {/#include <memory>/d}')
-
         modified_line=$(echo "$file_content" | grep -n "#include \"${class_name}PubSubTypes.h\"")
         echo "Modified line: $modified_line"
 
@@ -28,6 +25,10 @@ find "$folder_path" -type f -name "*.h" | while read -r file_path; do
             echo "The file $file_name has already been modified. Skipping..."
             continue
         fi
+
+        file_content=$(echo "$file_content" | sed '/#include/ i\
+#include <memory>' | sed '0,/#include <memory>/! {/#include <memory>/d}')
+
 
         modified_content=$(echo "$file_content" | sed "s/class $class_name/class $class_name : public std::enable_shared_from_this<$class_name>/")
 
@@ -37,10 +38,24 @@ find "$folder_path" -type f -name "*.h" | while read -r file_path; do
 
         echo "$modified_content_with_insert" > $file_path
         snake_name=$(camel_to_snake $class_name)
-        directory_name=$(dirname $file_path)
 
-        cp $file_path $directory_name/$snake_name.hpp
+        directory_path=$(dirname "$file_path")
+        directory_name=$(basename "$directory_path")
 
+        parent_path=$(dirname "$directory_path")
+        parent_directory_path=$(basename "$parent_path")
+                
+        include_guard=$(echo "${parent_directory_path}__${directory_name}__${class_name}.hpp" | tr '[:lower:]' '[:upper:]' | tr '/' '_' | tr '.' '_')
+
+        {
+        echo -e "#ifndef ${include_guard}"
+        echo -e "#define ${include_guard}\n"
+        echo -e "#include \"${class_name}PubSubTypes.h\"\n"
+        echo -e "template <>\nstruct ParentTypeTraits<${parent_directory_path}::${directory_name}::${class_name}> {"
+        echo -e "    using Type = ${parent_directory_path}::${directory_name}::${class_name}PubSubType;"
+        echo -e "};\n"
+        echo -e "#endif  // ${include_guard}"
+        } >> "$directory_path/$snake_name.hpp"
         echo "Modified the file $file_name"
 
     fi
