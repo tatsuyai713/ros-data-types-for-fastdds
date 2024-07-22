@@ -66,6 +66,7 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}"
   "${CMAKE_CURRENT_BINARY_DIR}/../tf2_msgs"
   "${CMAKE_CURRENT_BINARY_DIR}/../trajectory_msgs"
   "${CMAKE_CURRENT_BINARY_DIR}/../visualization_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../rcl_insterfaces"
   ${PROJECT_BINARY_DIR}
 )
 

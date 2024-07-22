@@ -1,0 +1,14 @@
+#ifndef __rcl_interfaces__msg__GetParameterTypes__idl 
+#define __rcl_interfaces__msg__GetParameterTypes__idl 
+
+module rcl_interfaces { module msg { 
+
+@nested 
+struct GetParameterTypes { 
+    sequence<string> names;
+    sequence<octet> types;
+}; 
+
+}; };  // module msg::rcl_interfaces 
+
+#endif  // __rcl_interfaces__msg__GetParameterTypes__idl 

@@ -1,0 +1,18 @@
+#ifndef __rcl_interfaces__msg__SetParametersAtomically__idl 
+#define __rcl_interfaces__msg__SetParametersAtomically__idl 
+
+#include "rcl_interfaces/msg/Parameter.idl" 
+#include "rcl_interfaces/msg/SetParametersResult.idl" 
+
+module rcl_interfaces { module msg { 
+
+@nested 
+struct SetParametersAtomically { 
+    sequence<rcl_interfaces::msg::Parameter> parameters;
+    sequence<rcl_interfaces::msg::SetParametersResult> results;
+}; 
+
+}; };  // module msg::rcl_interfaces 
+
+#endif  // __rcl_interfaces__msg__SetParametersAtomically__idl 
+

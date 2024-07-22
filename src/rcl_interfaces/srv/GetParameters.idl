@@ -1,0 +1,18 @@
+#ifndef __rcl_interfaces__msg__GetParameters__idl 
+#define __rcl_interfaces__msg__GetParameters__idl 
+
+#include "rcl_interfaces/msg/ParameterValue.idl" 
+
+module rcl_interfaces { module msg { 
+
+@nested 
+struct GetParameters { 
+    sequence<string> names;
+    sequence<rcl_interfaces::msg::ParameterValue> values;
+}; 
+
+}; };  // module msg::rcl_interfaces 
+
+#endif  // __rcl_interfaces__msg__GetParameters__idl 
+
+

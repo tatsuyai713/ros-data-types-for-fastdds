@@ -1,0 +1,24 @@
+#ifndef __rcl_interfaces__msg__ParameterEvent__idl 
+#define __rcl_interfaces__msg__ParameterEvent__idl 
+
+#include "rcl_interfaces/msg/Parameter.idl" 
+#include "builtin_interfaces/msg/Time.idl" 
+
+module rcl_interfaces { module msg { 
+
+@nested 
+struct ParameterEvent { 
+
+builtin_interfaces::msg::Time stamp;
+string node;
+
+sequence<rcl_interfaces::msg::Parameter> new_Parameters;
+sequence<rcl_interfaces::msg::Parameter> changed_Parameters;
+sequence<rcl_interfaces::msg::Parameter> deleted_Parameters;
+
+}; 
+
+}; };  // module msg::rcl_interfaces 
+
+#endif  // __rcl_interfaces__msg__ParameterEvent__idl 
+s.

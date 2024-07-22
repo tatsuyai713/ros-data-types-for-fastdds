@@ -1,0 +1,14 @@
+#ifndef __rcl_interfaces__msg__SetParametersResult__idl 
+#define __rcl_interfaces__msg__SetParametersResult__idl 
+
+module rcl_interfaces { module msg { 
+
+@nested 
+struct SetParametersResult { 
+    boolean successful;
+    string reason;
+}; 
+
+}; };  // module msg::rcl_interfaces 
+
+#endif  // __rcl_interfaces__msg__SetParametersResult__idl 

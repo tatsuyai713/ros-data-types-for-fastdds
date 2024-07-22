@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 
-project(lifecycle_msgs VERSION 1.0.0 LANGUAGES CXX)
+project(rcl_interfaces VERSION 1.0.0 LANGUAGES CXX)
 
 include(${PROJECT_SOURCE_DIR}/../../cmake/dds_utils.cmake)
 
@@ -42,13 +42,13 @@ add_custom_command(
     VERBATIM
 )
 
-add_custom_target(lifecycle_msgs_CompileIDLFiles ALL
+add_custom_target(rcl_interfaces_CompileIDLFiles ALL
     DEPENDS ${ALL_IDL_SRCS} update_headers_done)
 add_definitions(${DDS_DEFINITIONS})
-add_library(lifecycle_msgs SHARED
+add_library(rcl_interfaces SHARED
     ${in1_files}
 )
-add_dependencies(lifecycle_msgs lifecycle_msgs_CompileIDLFiles)
+add_dependencies(rcl_interfaces rcl_interfaces_CompileIDLFiles)
 
 include_directories("${CMAKE_CURRENT_BINARY_DIR}" 
   "${CMAKE_CURRENT_BINARY_DIR}/../diagnostic_msgs"
@@ -70,17 +70,18 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}"
   ${PROJECT_BINARY_DIR}
 )
 
-target_link_libraries(lifecycle_msgs LINK_PUBLIC -Wl,--allow-multiple-definition fastcdr fastrtps)
+target_link_libraries(rcl_interfaces LINK_PUBLIC -Wl,--allow-multiple-definition fastcdr fastrtps)
 
-target_include_directories(lifecycle_msgs PUBLIC
+target_include_directories(rcl_interfaces PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
   $<INSTALL_INTERFACE:include> 
 )
 
-install(TARGETS lifecycle_msgs
+
+install(TARGETS rcl_interfaces
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
 )
 
-install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lifecycle_msgs DESTINATION include/)
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/rcl_interfaces DESTINATION include/)

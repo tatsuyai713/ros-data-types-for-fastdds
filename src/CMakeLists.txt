@@ -12,5 +12,6 @@ add_subdirectory(test_msgs)
 add_subdirectory(tf2_msgs)
 add_subdirectory(trajectory_msgs)
 add_subdirectory(visualization_msgs)
+add_subdirectory(rcl_interfaces)
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../scripts/update_headers.sh DESTINATION bin/)

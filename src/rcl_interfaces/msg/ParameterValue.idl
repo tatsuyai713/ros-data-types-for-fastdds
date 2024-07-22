@@ -1,0 +1,37 @@
+#ifndef __rcl_interfaces__msg__ParameterValue__idl 
+#define __rcl_interfaces__msg__ParameterValue__idl 
+
+
+module rcl_interfaces { module msg { 
+
+const octet PARAMETER_NOT_SET = 0; 
+const octet PARAMETER_BOOL = 1; 
+const octet PARAMETER_INTEGER = 2; 
+const octet PARAMETER_DOUBLE = 3; 
+const octet PARAMETER_STRING = 4; 
+const octet PARAMETER_BYTE_ARRAY = 5; 
+const octet PARAMETER_BOOL_ARRAY = 6; 
+const octet PARAMETER_INTEGER_ARRAY = 7; 
+const octet PARAMETER_DOUBLE_ARRAY = 8; 
+const octet PARAMETER_STRING_ARRAY = 9; 
+ 
+@nested 
+struct ParameterValue { 
+
+    octet type;
+    boolean bool_value;
+    long long integer_value;
+    double double_value;
+    string string_value;
+    sequence<octet> byte_array_value; 
+    sequence<boolean> bool_array_value; 
+    sequence<long long> integer_array_value; 
+    sequence<double> double_array_value; 
+    sequence<string> string_array_value; 
+}; 
+
+}; };  // module msg::rcl_interfaces 
+
+#endif  // __rcl_interfaces__msg__ParameterValue__idl 
+
+

@@ -1,0 +1,16 @@
+#ifndef __rcl_interfaces__msg__Parameter__idl 
+#define __rcl_interfaces__msg__Parameter__idl 
+
+#include "rcl_interfaces/msg/ParameterValue.idl" 
+
+module rcl_interfaces { module msg { 
+
+@nested 
+struct Parameter { 
+    string name; 
+    rcl_interfaces::msg::ParameterValue value; 
+}; 
+
+}; };  // module msg::rcl_interfaces 
+
+#endif  // __rcl_interfaces__msg__Parameter__idl 
