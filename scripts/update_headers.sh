@@ -4,6 +4,10 @@ camel_to_snake() {
     local input="$1"
     echo "$input" | sed -E 's/([A-Z]+)([A-Z][a-z])/\1_\2/g' | sed -E 's/([a-z\d])([A-Z])/\1_\2/g' | tr '[:upper:]' '[:lower:]'
 }
+snake_to_camel() {
+    local input="$1"
+    echo "$input" | sed -r 's/(^|_)([a-z])/\U\2/g'
+}
 
 folder_path="$(pwd)"
 echo "Start processing in $folder_path"
@@ -55,9 +59,58 @@ find "$folder_path" -type f -name "*.h" | while read -r file_path; do
         echo -e "    using Type = ${parent_directory_path}::${directory_name}::${class_name}PubSubType;"
         echo -e "};\n"
         echo -e "#endif  // ${include_guard}"
-        } >> "$directory_path/$snake_name.hpp"
+        } > "$directory_path/$snake_name.hpp"
         echo "Modified the file $file_name"
 
     fi
 done
 
+
+# ファイルのチェック
+find "$folder_path" -type f -name "*_request.hpp" | while read -r request_file_path; do
+    echo "Found request file: $request_file_path"
+    
+    # _request.hppを_response.hppに置き換えたファイルパスを生成
+    response_file_path="${request_file_path/_request.hpp/_response.hpp}"
+    
+    # 対応する_response.hppファイルが存在するかチェック
+    if [ -f "$response_file_path" ]; then
+        echo "Corresponding response file exists: $response_file_path"
+        
+        # ベース名を生成
+        base_name="${request_file_path%_request.hpp}.hpp"
+        
+        # 新しいベース名のファイルを作成
+        touch "$base_name"
+
+        class_name=$(basename $base_name | cut -d'.' -f1)
+        camel_class_name=$(snake_to_camel $class_name)
+
+        directory_path=$(dirname "$base_name")
+        directory_name=$(basename "$directory_path")
+
+        parent_path=$(dirname "$directory_path")
+        parent_directory_path=$(basename "$parent_path")
+                
+        include_guard=$(echo "${parent_directory_path}__${directory_name}__${class_name}.hpp" | tr '[:lower:]' '[:upper:]' | tr '/' '_' | tr '.' '_')
+
+        {
+        echo -e "#ifndef ${include_guard}"
+        echo -e "#define ${include_guard}\n"
+        echo -e "#include \"${class_name}_request.hpp\"\n"
+        echo -e "#include \"${class_name}_response.hpp\"\n"
+        echo -e "namespace ${parent_directory_path} {\n"
+        echo -e "  namespace ${directory_name} {\n"
+        echo -e "    struct ${camel_class_name} {\n"
+        echo -e "      using Request = ${parent_directory_path}::${directory_name}::${camel_class_name}_Request;"
+        echo -e "      using Response = ${parent_directory_path}::${directory_name}::${camel_class_name}_Response;"
+        echo -e "    };\n"
+        echo -e "  };\n"
+        echo -e "};\n"
+        echo -e "#endif  // ${include_guard}"
+        } > "$base_name"
+        echo "Created file: $base_name"
+    else
+        echo "Corresponding response file does not exist for: $request_file_path"
+    fi
+done
