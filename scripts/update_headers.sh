@@ -38,9 +38,10 @@ find "$folder_path" -type f -name "*.h" | while read -r file_path; do
 
         modified_content_with_include=$(echo "$modified_content" | sed "$ a #include \"${class_name}PubSubTypes.h\"")
 
-        modified_content_with_insert=$(echo "$modified_content_with_include" | awk -v insert_code="            using SharedPtr = std::shared_ptr<${class_name}>;" '/class '$class_name'/ {p=1} p && /public:/ {print; print insert_code; p=0} 1')
+        modified_content_with_insert1=$(echo "$modified_content_with_include" | awk -v insert_code="            using SharedPtr = std::shared_ptr<${class_name}>;" '/class '$class_name'/ {p=1} p && /public:/ {print; print insert_code; p=0} 1')
+        modified_content_with_insert2=$(echo "$modified_content_with_insert1" | awk -v insert_code="            using ConstSharedPtr = const std::shared_ptr<${class_name}>;" '/class '$class_name'/ {p=1} p && /public:/ {print; print insert_code; p=0} 1')
 
-        echo "$modified_content_with_insert" > $file_path
+        echo "$modified_content_with_insert2" > $file_path
         snake_name=$(camel_to_snake $class_name)
 
         directory_path=$(dirname "$file_path")
