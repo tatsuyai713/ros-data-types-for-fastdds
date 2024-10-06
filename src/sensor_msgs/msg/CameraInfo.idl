@@ -22,18 +22,15 @@
  
 module sensor_msgs { module msg { 
  
-typedef double sensor_msgs__CameraInfo__double_array_9[9]; 
-typedef double sensor_msgs__CameraInfo__double_array_12[12]; 
- 
 struct CameraInfo { 
     std_msgs::msg::Header header; 
     unsigned long height; 
     unsigned long width; 
     string distortion_model; 
     sequence<double> d; 
-    sensor_msgs__CameraInfo__double_array_9 k; 
-    sensor_msgs__CameraInfo__double_array_9 r; 
-    sensor_msgs__CameraInfo__double_array_12 p; 
+    double k[9]; 
+    double r[9]; 
+    double p[12]; 
     unsigned long binning_x; 
     unsigned long binning_y; 
     sensor_msgs::msg::RegionOfInterest roi; 

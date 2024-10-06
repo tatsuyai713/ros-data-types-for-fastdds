@@ -19,10 +19,8 @@
  
 module shape_msgs { module msg { 
  
-typedef double shape_msgs__Plane__double_array_4[4]; 
- 
 struct Plane { 
-    shape_msgs__Plane__double_array_4 coef; 
+    double coef[4]; 
 }; 
  
 }; };  // module msg::shape_msgs 
