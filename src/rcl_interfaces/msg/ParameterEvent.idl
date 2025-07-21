@@ -21,4 +21,3 @@ sequence<rcl_interfaces::msg::Parameter> deleted_Parameters;
 }; };  // module msg::rcl_interfaces 
 
 #endif  // __rcl_interfaces__msg__ParameterEvent__idl 
-s.

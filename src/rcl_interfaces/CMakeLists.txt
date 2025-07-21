@@ -60,7 +60,12 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}"
   ${PROJECT_BINARY_DIR}
 )
 
-target_link_libraries(rcl_interfaces LINK_PUBLIC -Wl,--allow-multiple-definition fastcdr fastdds)
+if(DEFINED USE_FASTDDS3)
+    target_link_libraries(rcl_interfaces LINK_PUBLIC -Wl,--allow-multiple-definition fastdds)
+else()
+    target_link_libraries(rcl_interfaces LINK_PUBLIC -Wl,--allow-multiple-definition fastrtps)
+endif()
+target_link_libraries(rcl_interfaces LINK_PUBLIC -Wl,--allow-multiple-definition builtin_interfaces)
 
 target_include_directories(rcl_interfaces PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>

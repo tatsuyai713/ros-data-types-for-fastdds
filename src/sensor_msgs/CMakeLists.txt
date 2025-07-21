@@ -60,7 +60,12 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}"
   ${PROJECT_BINARY_DIR}
 )
 
-target_link_libraries(sensor_msgs LINK_PUBLIC -Wl,--allow-multiple-definition fastcdr fastdds)
+if(DEFINED USE_FASTDDS3)
+    target_link_libraries(sensor_msgs LINK_PUBLIC -Wl,--allow-multiple-definition fastdds)
+else()
+    target_link_libraries(sensor_msgs LINK_PUBLIC -Wl,--allow-multiple-definition fastrtps)
+endif()
+target_link_libraries(sensor_msgs LINK_PUBLIC -Wl,--allow-multiple-definition geometry_msgs)
 
 target_include_directories(sensor_msgs PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
