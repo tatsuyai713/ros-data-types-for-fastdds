@@ -16,22 +16,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 file(GLOB_RECURSE Original_IDL_Files
   "${CMAKE_CURRENT_SOURCE_DIR}/*/*.idl"
 )
-CREATE_IDL_FILES_COMMAND(${Original_IDL_Files})
-file(GLOB_RECURSE Local_IDL_Files
-  "${CMAKE_CURRENT_BINARY_DIR}/*.idl"
-)
+
+COMPILE_IDL_FILES(${Original_IDL_Files})
 file(GLOB_RECURSE in1_files
   "${CMAKE_CURRENT_BINARY_DIR}/*.cxx"
-  "${CMAKE_CURRENT_BINARY_DIR}/*.h"
+  "${CMAKE_CURRENT_BINARY_DIR}/*.hpp"
 )
-if (NOT in1_files)
-    #create an initial version of these files
-    COMPILE_IDL_FILES(${Original_IDL_Files})
-    file(GLOB_RECURSE in1_files
-      "${CMAKE_CURRENT_BINARY_DIR}/*.cxx"
-      "${CMAKE_CURRENT_BINARY_DIR}/*.h"
-    )
-endif()
 
 add_custom_command(
     OUTPUT update_headers_done
@@ -70,7 +60,7 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}"
   ${PROJECT_BINARY_DIR}
 )
 
-target_link_libraries(builtin_interfaces LINK_PUBLIC -Wl,--allow-multiple-definition fastcdr fastrtps)
+target_link_libraries(builtin_interfaces LINK_PUBLIC -Wl,--allow-multiple-definition fastcdr fastdds)
 
 target_include_directories(builtin_interfaces PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
