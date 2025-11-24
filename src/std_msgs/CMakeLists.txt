@@ -43,6 +43,7 @@ add_dependencies(std_msgs std_msgs_CompileIDLFiles)
 
 include_directories("${CMAKE_CURRENT_BINARY_DIR}" 
   "${CMAKE_CURRENT_BINARY_DIR}/../action_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../unique_identifier_msgs"
   "${CMAKE_CURRENT_BINARY_DIR}/../diagnostic_msgs"
   "${CMAKE_CURRENT_BINARY_DIR}/../gazebo_msgs"
   "${CMAKE_CURRENT_BINARY_DIR}/../geometry_msgs"

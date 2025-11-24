@@ -40,10 +40,26 @@ add_library(action_msgs SHARED
 )
 add_dependencies(action_msgs action_msgs_CompileIDLFiles)
 
-include_directories("${CMAKE_CURRENT_BINARY_DIR}"
-  "${CMAKE_CURRENT_BINARY_DIR}/../builtin_interfaces"
-  "${CMAKE_CURRENT_BINARY_DIR}/../unique_identifier_msgs"
+
+include_directories("${CMAKE_CURRENT_BINARY_DIR}" 
   "${CMAKE_CURRENT_BINARY_DIR}/../action_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../unique_identifier_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../diagnostic_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../gazebo_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../geometry_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../lifecycle_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../nav_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../pendulum_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../sensor_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../shape_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../std_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../builtin_interfaces"
+  "${CMAKE_CURRENT_BINARY_DIR}/../stereo_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../test_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../tf2_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../trajectory_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../visualization_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../rcl_insterfaces"
   ${PROJECT_BINARY_DIR}
 )
 
