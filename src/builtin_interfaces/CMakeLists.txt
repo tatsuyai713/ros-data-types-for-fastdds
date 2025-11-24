@@ -40,7 +40,9 @@ add_library(builtin_interfaces SHARED
 )
 add_dependencies(builtin_interfaces builtin_interfaces_CompileIDLFiles)
 
+
 include_directories("${CMAKE_CURRENT_BINARY_DIR}" 
+  "${CMAKE_CURRENT_BINARY_DIR}/../action_msgs"
   "${CMAKE_CURRENT_BINARY_DIR}/../diagnostic_msgs"
   "${CMAKE_CURRENT_BINARY_DIR}/../gazebo_msgs"
   "${CMAKE_CURRENT_BINARY_DIR}/../geometry_msgs"

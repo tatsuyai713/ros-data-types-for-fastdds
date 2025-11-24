@@ -1,0 +1,13 @@
+#include "unique_identifier_msgs/msg/UUID.idl"
+
+module action_msgs
+{
+  module msg
+  {
+    struct GoalStatus
+    {
+      unique_identifier_msgs::msg::UUID goal_id;
+      int8 status;
+    };
+  };
+};

@@ -1,0 +1,10 @@
+module unique_identifier_msgs
+{
+  module msg
+  {
+    struct UUID
+    {
+      sequence<uint8, 16> uuid;
+    };
+  };
+};

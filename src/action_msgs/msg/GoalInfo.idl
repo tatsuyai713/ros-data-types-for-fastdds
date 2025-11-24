@@ -1,0 +1,14 @@
+#include "builtin_interfaces/msg/Time.idl"
+#include "unique_identifier_msgs/msg/UUID.idl"
+
+module action_msgs
+{
+  module msg
+  {
+    struct GoalInfo
+    {
+      builtin_interfaces::msg::Time stamp;
+      unique_identifier_msgs::msg::UUID goal_id;
+    };
+  };
+};

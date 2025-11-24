@@ -40,7 +40,9 @@ add_library(test_msgs SHARED
 )
 add_dependencies(test_msgs test_msgs_CompileIDLFiles)
 
+
 include_directories("${CMAKE_CURRENT_BINARY_DIR}" 
+  "${CMAKE_CURRENT_BINARY_DIR}/../action_msgs"
   "${CMAKE_CURRENT_BINARY_DIR}/../diagnostic_msgs"
   "${CMAKE_CURRENT_BINARY_DIR}/../gazebo_msgs"
   "${CMAKE_CURRENT_BINARY_DIR}/../geometry_msgs"

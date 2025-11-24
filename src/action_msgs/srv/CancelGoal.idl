@@ -1,0 +1,21 @@
+#include "action_msgs/msg/GoalInfo.idl"
+#include "builtin_interfaces/msg/Time.idl"
+#include "unique_identifier_msgs/msg/UUID.idl"
+
+module action_msgs
+{
+  module srv
+  {
+    struct CancelGoal_Request
+    {
+      builtin_interfaces::msg::Time stamp;
+      unique_identifier_msgs::msg::UUID goal_id;
+    };
+
+    struct CancelGoal_Response
+    {
+      int8 return_code;
+      sequence<action_msgs::msg::GoalInfo> goals_canceling;
+    };
+  };
+};

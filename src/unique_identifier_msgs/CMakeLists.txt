@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 
-project(stereo_msgs VERSION 1.0.0 LANGUAGES CXX)
+project(unique_identifier_msgs VERSION 1.0.0 LANGUAGES CXX)
 
 include(${PROJECT_SOURCE_DIR}/../../cmake/dds_utils.cmake)
 
@@ -32,52 +32,35 @@ add_custom_command(
     VERBATIM
 )
 
-add_custom_target(stereo_msgs_CompileIDLFiles ALL
+add_custom_target(unique_identifier_msgs_CompileIDLFiles ALL
     DEPENDS ${ALL_IDL_SRCS} update_headers_done)
 add_definitions(${DDS_DEFINITIONS})
-add_library(stereo_msgs SHARED
+add_library(unique_identifier_msgs SHARED
     ${in1_files}
 )
-add_dependencies(stereo_msgs stereo_msgs_CompileIDLFiles)
+add_dependencies(unique_identifier_msgs unique_identifier_msgs_CompileIDLFiles)
 
-
-include_directories("${CMAKE_CURRENT_BINARY_DIR}" 
-  "${CMAKE_CURRENT_BINARY_DIR}/../action_msgs"
-  "${CMAKE_CURRENT_BINARY_DIR}/../diagnostic_msgs"
-  "${CMAKE_CURRENT_BINARY_DIR}/../gazebo_msgs"
-  "${CMAKE_CURRENT_BINARY_DIR}/../geometry_msgs"
-  "${CMAKE_CURRENT_BINARY_DIR}/../lifecycle_msgs"
-  "${CMAKE_CURRENT_BINARY_DIR}/../nav_msgs"
-  "${CMAKE_CURRENT_BINARY_DIR}/../pendulum_msgs"
-  "${CMAKE_CURRENT_BINARY_DIR}/../sensor_msgs"
-  "${CMAKE_CURRENT_BINARY_DIR}/../shape_msgs"
-  "${CMAKE_CURRENT_BINARY_DIR}/../std_msgs"
+include_directories("${CMAKE_CURRENT_BINARY_DIR}"
   "${CMAKE_CURRENT_BINARY_DIR}/../builtin_interfaces"
-  "${CMAKE_CURRENT_BINARY_DIR}/../stereo_msgs"
-  "${CMAKE_CURRENT_BINARY_DIR}/../test_msgs"
-  "${CMAKE_CURRENT_BINARY_DIR}/../tf2_msgs"
-  "${CMAKE_CURRENT_BINARY_DIR}/../trajectory_msgs"
-  "${CMAKE_CURRENT_BINARY_DIR}/../visualization_msgs"
-  "${CMAKE_CURRENT_BINARY_DIR}/../rcl_insterfaces"
+  "${CMAKE_CURRENT_BINARY_DIR}/../unique_identifier_msgs"
   ${PROJECT_BINARY_DIR}
 )
 
 if(DEFINED USE_FASTDDS3)
-    target_link_libraries(stereo_msgs LINK_PUBLIC -Wl,--allow-multiple-definition fastdds)
+    target_link_libraries(unique_identifier_msgs LINK_PUBLIC -Wl,--allow-multiple-definition fastdds)
 else()
-    target_link_libraries(stereo_msgs LINK_PUBLIC -Wl,--allow-multiple-definition fastrtps)
+    target_link_libraries(unique_identifier_msgs LINK_PUBLIC -Wl,--allow-multiple-definition fastrtps)
 endif()
-target_link_libraries(stereo_msgs LINK_PUBLIC -Wl,--allow-multiple-definition sensor_msgs)
 
-target_include_directories(stereo_msgs PUBLIC
+target_include_directories(unique_identifier_msgs PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
-  $<INSTALL_INTERFACE:include> 
+  $<INSTALL_INTERFACE:include>
 )
 
-install(TARGETS stereo_msgs
+install(TARGETS unique_identifier_msgs
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
 )
 
-install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/stereo_msgs DESTINATION include/)
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/unique_identifier_msgs DESTINATION include/)
