@@ -1,6 +1,5 @@
 #include "action_msgs/msg/GoalInfo.idl"
 #include "builtin_interfaces/msg/Time.idl"
-#include "unique_identifier_msgs/msg/UUID.idl"
 
 module action_msgs
 {
