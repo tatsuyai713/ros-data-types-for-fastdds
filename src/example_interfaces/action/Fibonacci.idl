@@ -1,0 +1,55 @@
+/* 
+ * example_interfaces/action/Fibonacci.idl 
+ */ 
+
+#ifndef __example_interfaces__action__Fibonacci__idl 
+#define __example_interfaces__action__Fibonacci__idl 
+
+#include "builtin_interfaces/msg/Time.idl" 
+#include "unique_identifier_msgs/msg/UUID.idl" 
+
+module example_interfaces { module action { 
+
+struct Fibonacci_Goal {
+    int32 order;
+};
+
+struct Fibonacci_Result {
+    sequence<int32> sequence_;
+};
+
+struct Fibonacci_Feedback {
+    sequence<int32> sequence_;
+};
+
+module detail { 
+
+struct Fibonacci_SendGoal_Request { 
+    unique_identifier_msgs::msg::UUID goal_id; 
+    example_interfaces::action::Fibonacci_Goal goal; 
+}; 
+
+struct Fibonacci_SendGoal_Response { 
+    boolean accepted; 
+    builtin_interfaces::msg::Time stamp; 
+}; 
+
+struct Fibonacci_GetResult_Request { 
+    unique_identifier_msgs::msg::UUID goal_id; 
+}; 
+
+struct Fibonacci_GetResult_Response { 
+    int8 status; 
+    example_interfaces::action::Fibonacci_Result result; 
+}; 
+
+struct Fibonacci_FeedbackMessage { 
+    unique_identifier_msgs::msg::UUID goal_id; 
+    example_interfaces::action::Fibonacci_Feedback feedback; 
+}; 
+
+};  // module detail 
+
+}; };  // module action::example_interfaces 
+
+#endif  // __example_interfaces__action__Fibonacci__idl 

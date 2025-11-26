@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 
-project(visualization_msgs VERSION 1.0.0 LANGUAGES CXX)
+project(example_interfaces VERSION 1.0.0 LANGUAGES CXX)
 
 include(${PROJECT_SOURCE_DIR}/../../cmake/dds_utils.cmake)
 
@@ -32,13 +32,14 @@ add_custom_command(
     VERBATIM
 )
 
-add_custom_target(visualization_msgs_CompileIDLFiles ALL
+add_custom_target(example_interfaces_CompileIDLFiles ALL
     DEPENDS ${ALL_IDL_SRCS} update_headers_done)
 add_definitions(${DDS_DEFINITIONS})
-add_library(visualization_msgs SHARED
+add_library(example_interfaces SHARED
     ${in1_files}
 )
-add_dependencies(visualization_msgs visualization_msgs_CompileIDLFiles)
+add_dependencies(example_interfaces example_interfaces_CompileIDLFiles)
+
 
 include_directories("${CMAKE_CURRENT_BINARY_DIR}" 
   "${CMAKE_CURRENT_BINARY_DIR}/../action_msgs"
@@ -64,21 +65,21 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}"
 )
 
 if(DEFINED USE_FASTDDS3)
-    target_link_libraries(visualization_msgs LINK_PUBLIC -Wl,--allow-multiple-definition fastdds)
+    target_link_libraries(example_interfaces LINK_PUBLIC -Wl,--allow-multiple-definition fastdds)
 else()
-    target_link_libraries(visualization_msgs LINK_PUBLIC -Wl,--allow-multiple-definition fastrtps)
+    target_link_libraries(example_interfaces LINK_PUBLIC -Wl,--allow-multiple-definition fastrtps)
 endif()
-target_link_libraries(visualization_msgs LINK_PUBLIC -Wl,--allow-multiple-definition geometry_msgs)
+target_link_libraries(example_interfaces LINK_PUBLIC -Wl,--allow-multiple-definition builtin_interfaces)
 
-target_include_directories(visualization_msgs PUBLIC
+target_include_directories(example_interfaces PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
-  $<INSTALL_INTERFACE:include> 
+  $<INSTALL_INTERFACE:include>
 )
 
-install(TARGETS visualization_msgs
+install(TARGETS example_interfaces
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
 )
 
-install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/visualization_msgs DESTINATION include/)
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/example_interfaces DESTINATION include/)

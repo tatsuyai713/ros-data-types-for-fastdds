@@ -1,3 +1,6 @@
+#ifndef __unique_identifier_msgs__msg__UUID__idl
+#define __unique_identifier_msgs__msg__UUID__idl
+
 module unique_identifier_msgs
 {
   module msg
@@ -8,3 +11,5 @@ module unique_identifier_msgs
     };
   };
 };
+
+#endif  // __unique_identifier_msgs__msg__UUID__idl

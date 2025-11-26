@@ -1,3 +1,6 @@
+#ifndef __action_msgs__msg__GoalInfo__idl
+#define __action_msgs__msg__GoalInfo__idl
+
 #include "builtin_interfaces/msg/Time.idl"
 #include "unique_identifier_msgs/msg/UUID.idl"
 
@@ -12,3 +15,5 @@ module action_msgs
     };
   };
 };
+
+#endif  // __action_msgs__msg__GoalInfo__idl

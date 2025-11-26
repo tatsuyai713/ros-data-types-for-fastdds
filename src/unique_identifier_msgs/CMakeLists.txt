@@ -39,9 +39,9 @@ add_library(unique_identifier_msgs SHARED
     ${in1_files}
 )
 add_dependencies(unique_identifier_msgs unique_identifier_msgs_CompileIDLFiles)
-
 include_directories("${CMAKE_CURRENT_BINARY_DIR}" 
   "${CMAKE_CURRENT_BINARY_DIR}/../action_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../example_interfaces"
   "${CMAKE_CURRENT_BINARY_DIR}/../unique_identifier_msgs"
   "${CMAKE_CURRENT_BINARY_DIR}/../diagnostic_msgs"
   "${CMAKE_CURRENT_BINARY_DIR}/../gazebo_msgs"

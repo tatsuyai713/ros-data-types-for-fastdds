@@ -1,0 +1,17 @@
+/* 
+ * example_interfaces/srv/AddTwoInts_Request.idl 
+ */ 
+
+#ifndef __example_interfaces__srv__AddTwoInts_Request__idl 
+#define __example_interfaces__srv__AddTwoInts_Request__idl 
+
+module example_interfaces { module srv { 
+
+struct AddTwoInts_Request { 
+    int64 a; 
+    int64 b; 
+}; 
+
+}; };  // module srv::example_interfaces 
+
+#endif  // __example_interfaces__srv__AddTwoInts_Request__idl 

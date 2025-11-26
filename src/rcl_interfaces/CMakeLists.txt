@@ -40,9 +40,9 @@ add_library(rcl_interfaces SHARED
 )
 add_dependencies(rcl_interfaces rcl_interfaces_CompileIDLFiles)
 
-
 include_directories("${CMAKE_CURRENT_BINARY_DIR}" 
   "${CMAKE_CURRENT_BINARY_DIR}/../action_msgs"
+  "${CMAKE_CURRENT_BINARY_DIR}/../example_interfaces"
   "${CMAKE_CURRENT_BINARY_DIR}/../unique_identifier_msgs"
   "${CMAKE_CURRENT_BINARY_DIR}/../diagnostic_msgs"
   "${CMAKE_CURRENT_BINARY_DIR}/../gazebo_msgs"

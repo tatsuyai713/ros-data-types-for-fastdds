@@ -1,10 +1,18 @@
+#ifndef __action_msgs__srv__CancelGoal__idl
+#define __action_msgs__srv__CancelGoal__idl
+
 #include "action_msgs/msg/GoalInfo.idl"
 #include "builtin_interfaces/msg/Time.idl"
+#include "unique_identifier_msgs/msg/UUID.idl"
 
 module action_msgs
 {
   module srv
   {
+    const int8 ERROR_NONE = 0;
+    const int8 ERROR_REJECTED = 1;
+    const int8 ERROR_UNKNOWN = 2;
+
     struct CancelGoal_Request
     {
       builtin_interfaces::msg::Time stamp;
@@ -18,3 +26,5 @@ module action_msgs
     };
   };
 };
+
+#endif  // __action_msgs__srv__CancelGoal__idl

@@ -1,0 +1,16 @@
+/* 
+ * example_interfaces/srv/AddTwoInts_Response.idl 
+ */ 
+
+#ifndef __example_interfaces__srv__AddTwoInts_Response__idl 
+#define __example_interfaces__srv__AddTwoInts_Response__idl 
+
+module example_interfaces { module srv { 
+
+struct AddTwoInts_Response { 
+    int64 sum; 
+}; 
+
+}; };  // module srv::example_interfaces 
+
+#endif  // __example_interfaces__srv__AddTwoInts_Response__idl 

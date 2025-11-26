@@ -15,5 +15,6 @@ add_subdirectory(visualization_msgs)
 add_subdirectory(rcl_interfaces)
 add_subdirectory(unique_identifier_msgs)
 add_subdirectory(action_msgs)
+add_subdirectory(example_interfaces)
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../scripts/update_headers.sh DESTINATION bin/)
