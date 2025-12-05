@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 
-project(lifecycle_msgs VERSION 1.0.0 LANGUAGES CXX)
+project(std_srvs VERSION 1.0.0 LANGUAGES CXX)
 
 include(${PROJECT_SOURCE_DIR}/../../cmake/dds_utils.cmake)
 
@@ -32,13 +32,13 @@ add_custom_command(
     VERBATIM
 )
 
-add_custom_target(lifecycle_msgs_CompileIDLFiles ALL
+add_custom_target(std_srvs_CompileIDLFiles ALL
     DEPENDS ${ALL_IDL_SRCS} update_headers_done)
 add_definitions(${DDS_DEFINITIONS})
-add_library(lifecycle_msgs SHARED
+add_library(std_srvs SHARED
     ${in1_files}
 )
-add_dependencies(lifecycle_msgs lifecycle_msgs_CompileIDLFiles)
+add_dependencies(std_srvs std_srvs_CompileIDLFiles)
 
 include_directories("${CMAKE_CURRENT_BINARY_DIR}" 
   "${CMAKE_CURRENT_BINARY_DIR}/../action_msgs"
@@ -65,20 +65,21 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}"
 )
 
 if(DEFINED USE_FASTDDS3)
-    target_link_libraries(lifecycle_msgs LINK_PUBLIC -Wl,--allow-multiple-definition fastdds)
+    target_link_libraries(std_srvs LINK_PUBLIC -Wl,--allow-multiple-definition fastdds)
 else()
-    target_link_libraries(lifecycle_msgs LINK_PUBLIC -Wl,--allow-multiple-definition fastrtps)
+    target_link_libraries(std_srvs LINK_PUBLIC -Wl,--allow-multiple-definition fastrtps)
 endif()
+target_link_libraries(std_srvs LINK_PUBLIC -Wl,--allow-multiple-definition builtin_interfaces)
 
-target_include_directories(lifecycle_msgs PUBLIC
+target_include_directories(std_srvs PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
   $<INSTALL_INTERFACE:include> 
 )
 
-install(TARGETS lifecycle_msgs
+install(TARGETS std_srvs
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin
 )
 
-install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/lifecycle_msgs DESTINATION include/)
+install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/std_srvs DESTINATION include/)
