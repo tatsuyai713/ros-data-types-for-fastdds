@@ -34,12 +34,14 @@ find "$folder_path" -type f -name "*.h" | while read -r file_path; do
 #include <memory>' | sed '0,/#include <memory>/! {/#include <memory>/d}')
 
 
-        modified_content=$(echo "$file_content" | sed "s/class $class_name/class $class_name : public std::enable_shared_from_this<$class_name>/")
+        # Avoid partial matches such as CancelGoal_Request when class_name is CancelGoal
+        modified_content=$(echo "$file_content" | sed "s/class ${class_name}\\b/class ${class_name} : public std::enable_shared_from_this<${class_name}>/")
 
         modified_content_with_include=$(echo "$modified_content" | sed "$ a #include \"${class_name}PubSubTypes.h\"")
 
-        modified_content_with_insert1=$(echo "$modified_content_with_include" | awk -v insert_code="            using SharedPtr = std::shared_ptr<${class_name}>;" '/class '$class_name'/ {p=1} p && /public:/ {print; print insert_code; p=0} 1')
-        modified_content_with_insert2=$(echo "$modified_content_with_insert1" | awk -v insert_code="            using ConstSharedPtr = const std::shared_ptr<${class_name}>;" '/class '$class_name'/ {p=1} p && /public:/ {print; print insert_code; p=0} 1')
+        boundary_pattern="(^|[[:space:]])class[[:space:]]+${class_name}([[:space:]]|$)"
+        modified_content_with_insert1=$(echo "$modified_content_with_include" | awk -v insert_code="            using SharedPtr = std::shared_ptr<${class_name}>;" -v pattern="$boundary_pattern" '($0 ~ pattern) {p=1} p && /public:/ {print; print insert_code; p=0} 1')
+        modified_content_with_insert2=$(echo "$modified_content_with_insert1" | awk -v insert_code="            using ConstSharedPtr = const std::shared_ptr<${class_name}>;" -v pattern="$boundary_pattern" '($0 ~ pattern) {p=1} p && /public:/ {print; print insert_code; p=0} 1')
 
         echo "$modified_content_with_insert2" > $file_path
         snake_name=$(camel_to_snake $class_name)
