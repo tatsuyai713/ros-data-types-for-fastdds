@@ -19,3 +19,4 @@ add_subdirectory(action_msgs)
 add_subdirectory(example_interfaces)
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/../scripts/update_headers.sh DESTINATION bin/)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/rosidl_runtime_cpp DESTINATION include/)

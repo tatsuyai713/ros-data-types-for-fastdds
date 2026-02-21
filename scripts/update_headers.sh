@@ -25,25 +25,29 @@ find "$folder_path" -type f -name "*.h" | while read -r file_path; do
         modified_line=$(echo "$file_content" | grep -n "#include \"${class_name}PubSubTypes.h\"")
         echo "Modified line: $modified_line"
 
+        already_modified=false
         if [ -n "$modified_line" ]; then
-            echo "The file $file_name has already been modified. Skipping..."
-            continue
+            echo "The file $file_name has already been modified. Skipping class patch only..."
+            already_modified=true
         fi
 
-        file_content=$(echo "$file_content" | sed '/#include/ i\
+        if [ "$already_modified" = false ]; then
+            file_content=$(echo "$file_content" | sed '/#include/ i\
 #include <memory>' | sed '0,/#include <memory>/! {/#include <memory>/d}')
 
 
-        # Avoid partial matches such as CancelGoal_Request when class_name is CancelGoal
-        modified_content=$(echo "$file_content" | sed "s/class ${class_name}\\b/class ${class_name} : public std::enable_shared_from_this<${class_name}>/")
+            # Avoid partial matches such as CancelGoal_Request when class_name is CancelGoal
+            modified_content=$(echo "$file_content" | sed "s/class ${class_name}\\b/class ${class_name} : public std::enable_shared_from_this<${class_name}>/")
 
-        modified_content_with_include=$(echo "$modified_content" | sed "$ a #include \"${class_name}PubSubTypes.h\"")
+            modified_content_with_include=$(echo "$modified_content" | sed "$ a #include \"${class_name}PubSubTypes.h\"")
 
-        boundary_pattern="(^|[[:space:]])class[[:space:]]+${class_name}([[:space:]]|$)"
-        modified_content_with_insert1=$(echo "$modified_content_with_include" | awk -v insert_code="            using SharedPtr = std::shared_ptr<${class_name}>;" -v pattern="$boundary_pattern" '($0 ~ pattern) {p=1} p && /public:/ {print; print insert_code; p=0} 1')
-        modified_content_with_insert2=$(echo "$modified_content_with_insert1" | awk -v insert_code="            using ConstSharedPtr = const std::shared_ptr<${class_name}>;" -v pattern="$boundary_pattern" '($0 ~ pattern) {p=1} p && /public:/ {print; print insert_code; p=0} 1')
+            boundary_pattern="(^|[[:space:]])class[[:space:]]+${class_name}([[:space:]]|$)"
+            modified_content_with_insert1=$(echo "$modified_content_with_include" | awk -v insert_code="            using SharedPtr = std::shared_ptr<${class_name}>;" -v pattern="$boundary_pattern" '($0 ~ pattern) {p=1} p && /public:/ {print; print insert_code; p=0} 1')
+            modified_content_with_insert2=$(echo "$modified_content_with_insert1" | awk -v insert_code="            using ConstSharedPtr = const std::shared_ptr<${class_name}>;" -v pattern="$boundary_pattern" '($0 ~ pattern) {p=1} p && /public:/ {print; print insert_code; p=0} 1')
 
-        echo "$modified_content_with_insert2" > $file_path
+            echo "$modified_content_with_insert2" > $file_path
+        fi
+
         snake_name=$(camel_to_snake $class_name)
 
         directory_path=$(dirname "$file_path")
@@ -58,6 +62,7 @@ find "$folder_path" -type f -name "*.h" | while read -r file_path; do
         echo -e "#ifndef ${include_guard}"
         echo -e "#define ${include_guard}\n"
         echo -e "#include \"${class_name}PubSubTypes.h\"\n"
+        echo -e "template <typename T>\nstruct ParentTypeTraits;\n"
         echo -e "template <>\nstruct ParentTypeTraits<${parent_directory_path}::${directory_name}::${class_name}> {"
         echo -e "    using Type = ${parent_directory_path}::${directory_name}::${class_name}PubSubType;"
         echo -e "};\n"
