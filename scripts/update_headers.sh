@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 camel_to_snake() {
     local input="$1"
     echo "$input" | sed -E 's/([A-Z]+)([A-Z][a-z])/\1_\2/g' | sed -E 's/([a-z\d])([A-Z])/\1_\2/g' | tr '[:upper:]' '[:lower:]'
@@ -122,3 +124,17 @@ find "$folder_path" -type f -name "*_request.hpp" | while read -r request_file_p
         echo "Corresponding response file does not exist for: $request_file_path"
     fi
 done
+
+# ----------------------------------------------------------------
+# Expose IDL-generated members as ROS 2-style public fields.
+# Removes "()" accessors and renames m_<name> -> <name>.
+# ----------------------------------------------------------------
+if [ -f "$SCRIPT_DIR/expose_idl_members.py" ]; then
+    PYTHON3_BIN="$(command -v python3 || command -v python || true)"
+    if [ -n "$PYTHON3_BIN" ]; then
+        echo "Running expose_idl_members.py (fastdds) on $folder_path"
+        "$PYTHON3_BIN" "$SCRIPT_DIR/expose_idl_members.py" --mode fastdds "$folder_path"
+    else
+        echo "WARN: python3 not found; skipping expose_idl_members.py" >&2
+    fi
+fi
